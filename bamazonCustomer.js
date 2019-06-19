@@ -10,22 +10,22 @@ var cost;
 var totalSales;
 
 var connection = mysql.createConnection({
-  host: "localhost",
-  port: 3306,
-  user: "root",
-  password: "Beason11!",
-  database: "bamazon"
+    host: "localhost",
+    port: 3306,
+    user: "root",
+    password: "Beason11!",
+    database: "bamazon"
 });
-connection.connect(function(err) {
+connection.connect(function (err) {
     if (err) {
-      console.log(err.message);
-      return;
-    }; 
+        console.log(err.message);
+        return;
+    };
     loadProducts();
 });
 
 function loadProducts() {
-    connection.query("SELECT * FROM products", function(err,res) {
+    connection.query("SELECT * FROM products", function (err, res) {
         if (err) {
             throw err;
         };
@@ -33,13 +33,13 @@ function loadProducts() {
         chooseItems();
     });
 };
-    
+
 function chooseItems() {
-    connection.query("SELECT * FROM products", function(err, results) {
+    connection.query("SELECT * FROM products", function (err, results) {
         if (err) {
             throw err;
         };
-        
+
         inquirer.prompt(
             [
                 {
@@ -53,7 +53,7 @@ function chooseItems() {
                         }
                         return itemArray;
                     }
-                }, 
+                },
                 {
                     type: "input",
                     name: "quantity",
@@ -61,14 +61,14 @@ function chooseItems() {
                 }
             ]
         ).then(function (val) {
-            
+
             checkStockQuantity(val, results);
         });
     });
 };
 
 function checkStockQuantity(answer, results) {
-    
+
     for (var i = 0; i < results.length; i++) {
         if (results[i].product_name === answer.choice) {
             selectedItem = results[i];
@@ -81,7 +81,7 @@ function checkStockQuantity(answer, results) {
     if (stockQuantity >= parseInt(requestedQuantity)) {
         changeStockQuantity();
         calculateTotal();
-        connection.query (
+        connection.query(
             "UPDATE products SET ? WHERE ?",
             [
                 {
@@ -91,11 +91,49 @@ function checkStockQuantity(answer, results) {
                     id: selectedItem.id
                 }
             ],
-            function(error) {
+            function (error) {
                 if (error) {
                     throw error;
-                } else{
+                } else {
                     console.log("\n\n");
                     console.log("Your total is " + customerTotal);
                     console.log("-----------------------------\n\n\n\n");
-                    
+                }
+            }
+        );
+        calculateProductSales();
+        connection.query(
+            "UPDATE products SET ? WHERE ?",
+            [
+                {
+                    product_sales: totalSales
+                },
+                {
+                    id: selectedItem.id
+                }
+            ],
+            function (error) {
+                if (error) {
+                    throw error;
+                } else {
+                    loadProducts();
+                }
+            }
+        )
+    } else {
+        console.log("Insufficient quantity, try again.");
+        loadProducts();
+    };
+};
+
+function changeStockQuantity() {
+    newStockQuantity = stockQuantity - requestedQuantity;
+};
+
+function calculateTotal() {
+    customerTotal = cost * requestedQuantity;
+};
+
+function calculateProductSales() {
+    totalSales = salesToDate + customerTotal;
+};
