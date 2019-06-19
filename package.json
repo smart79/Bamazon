@@ -1,5 +1,5 @@
 {
-  "name": "bamazon",
+  "name": "bamazon_db",
   "version": "1.0.0",
   "description": "An interactive storefront that runs in the console using node.",
   "main": "bamazonCustomer.js",
@@ -10,10 +10,14 @@
     "type": "git",
     "url": "git+https://github.com/smart79/Bamazon.git"
   },
-  "author": "",
+  "author": "Chris Martinez",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/smart79/Bamazon/issues"
   },
-  "homepage": "https://github.com/smart79/Bamazon#readme"
+  "homepage": "https://github.com/smart79/Bamazon#readme",
+  "dependencies": {
+    "inquirer": "^6.3.1",
+    "mysql": "^2.17.1"
+  }
 }
