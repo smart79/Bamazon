@@ -1,7 +1,7 @@
 {
   "name": "bamazon_db",
   "version": "1.0.0",
-  "description": "An interactive storefront that runs in the console using node.",
+  "description": "An interactive storefront/node.",
   "main": "bamazonCustomer.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -12,7 +12,7 @@ var connection = mysql.createConnection({
 
     // Your password
     password: 'Beason11!',
-    database: 'Bamazon'
+    database: 'bamazon_db'
 });
 function promptManagerAction() {
     // console.log('___ENTER promptManagerAction___');
