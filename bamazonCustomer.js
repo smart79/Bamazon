@@ -75,7 +75,7 @@ function checkStockQuantity(answer, results) {
             stockQuantity = selectedItem.stock_quantity;
             requestedQuantity = answer.quantity;
             cost = selectedItem.price;
-            salesToDate = selectedItem.product_sales;
+            salesToDate = selectedItem.price;
         };
     };
     if (stockQuantity >= parseInt(requestedQuantity)) {
@@ -106,7 +106,7 @@ function checkStockQuantity(answer, results) {
             "UPDATE products SET ? WHERE ?",
             [
                 {
-                    product_sales: totalSales
+                    price: totalSales
                 },
                 {
                     item_id: selectedItem.id
