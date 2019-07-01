@@ -66,7 +66,7 @@ function chooseItems() {
         });
     });
 };
-
+console.log("everthing is awesome")
 function checkStockQuantity(answer, results) {
 
     for (var i = 0; i < results.length; i++) {
@@ -88,7 +88,7 @@ function checkStockQuantity(answer, results) {
                     stock_quantity: newStockQuantity
                 },
                 {
-                    id: selectedItem.id
+                    item_id: selectedItem.id
                 }
             ],
             function (error) {
@@ -109,7 +109,7 @@ function checkStockQuantity(answer, results) {
                     product_sales: totalSales
                 },
                 {
-                    id: selectedItem.id
+                    item_id: selectedItem.id
                 }
             ],
             function (error) {
