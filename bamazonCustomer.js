@@ -81,15 +81,12 @@ function checkStockQuantity(answer, results) {
     if (stockQuantity >= parseInt(requestedQuantity)) {
         changeStockQuantity();
         calculateTotal();
+        console.log(selectedItem.item_id)
         connection.query(
-            "UPDATE products SET ? WHERE ?",
+            "UPDATE products SET stock_quantity=? WHERE item_id=?",
+
             [
-                {
-                    stock_quantity: newStockQuantity
-                },
-                {
-                    item_id: selectedItem.id
-                }
+                newStockQuantity, selectedItem.item_id
             ],
             function (error) {
                 if (error) {
@@ -102,24 +99,7 @@ function checkStockQuantity(answer, results) {
             }
         );
         calculateProductSales();
-        connection.query(
-            "UPDATE products SET ? WHERE ?",
-            [
-                {
-                    price: totalSales
-                },
-                {
-                    item_id: selectedItem.id
-                }
-            ],
-            function (error) {
-                if (error) {
-                    throw error;
-                } else {
-                    loadProducts();
-                }
-            }
-        )
+
     } else {
         console.log("Insufficient quantity, try again.");
         loadProducts();
@@ -132,8 +112,10 @@ function changeStockQuantity() {
 
 function calculateTotal() {
     customerTotal = cost * requestedQuantity;
+    console.log(customerTotal)
 };
 
 function calculateProductSales() {
     totalSales = salesToDate + customerTotal;
+    console.log(totalSales)
 };
